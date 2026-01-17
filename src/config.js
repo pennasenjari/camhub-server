@@ -1,9 +1,11 @@
 const path = require("path");
 
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
+
 const DATA_DIR = path.join(__dirname, "storage");
 
 module.exports = {
-  PORT: process.env.PORT || 8080,
+  PORT: process.env.PORT || 3001,
   DATA_DIR,
   STREAMS_DIR: path.join(DATA_DIR, "streams"),
   SNAPSHOTS_DIR: path.join(DATA_DIR, "snapshots"),
