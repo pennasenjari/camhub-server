@@ -13,10 +13,10 @@ router.post("/:id", async (req, res) => {
   }
 
   try {
-    const filePath = await takeSnapshot(camera);
-    res.json({ ok: true, path: filePath });
+    const snapshot = await takeSnapshot(camera);
+    res.json({ ok: true, path: `/snapshots/${snapshot.filename}`, filename: snapshot.filename });
   } catch (err) {
-    res.status(500).json({ error: "Snapshot failed" });
+    res.status(500).json({ error: err.message || "Snapshot failed" });
   }
 });
 
