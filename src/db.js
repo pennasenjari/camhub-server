@@ -22,6 +22,18 @@ async function initDb() {
       enabled INTEGER NOT NULL DEFAULT 1,
       status TEXT NOT NULL DEFAULT 'offline',
       last_seen INTEGER,
+      last_motion_at INTEGER,
+      created_at INTEGER NOT NULL
+    );
+  `);
+
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS motion_events (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      camera_id INTEGER NOT NULL,
+      ts INTEGER NOT NULL,
+      score REAL,
+      snapshot_path TEXT,
       created_at INTEGER NOT NULL
     );
   `);
@@ -38,10 +50,15 @@ async function initDb() {
   if (!existing.has("source")) {
     await db.exec("ALTER TABLE cameras ADD COLUMN source TEXT NOT NULL DEFAULT 'server'");
   }
+  if (!existing.has("last_motion_at")) {
+    await db.exec("ALTER TABLE cameras ADD COLUMN last_motion_at INTEGER");
+  }
 
   await db.exec(
     "CREATE UNIQUE INDEX IF NOT EXISTS idx_cameras_device_uid ON cameras(device_uid)"
   );
+  await db.exec("CREATE INDEX IF NOT EXISTS idx_motion_events_camera_id ON motion_events(camera_id)");
+  await db.exec("CREATE INDEX IF NOT EXISTS idx_motion_events_ts ON motion_events(ts)");
 
   return db;
 }

@@ -17,5 +17,6 @@ module.exports = {
   MEDIAMTX_ARGS: process.env.MEDIAMTX_ARGS || "",
   MEDIAMTX_AUTOSTART: (process.env.MEDIAMTX_AUTOSTART || "true").toLowerCase() === "true",
   WEBRTC_BASE_URL: process.env.WEBRTC_BASE_URL || "",
-  AGENT_STALE_MS: Number(process.env.AGENT_STALE_MS || 15000)
+  AGENT_STALE_MS: Number(process.env.AGENT_STALE_MS || 15000),
+  MOTION_SNAPSHOT: (process.env.MOTION_SNAPSHOT || "false").toLowerCase() === "true"
 };

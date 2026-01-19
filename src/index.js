@@ -21,6 +21,7 @@ const camerasRouter = require("./routes/cameras");
 const snapshotsRouter = require("./routes/snapshots");
 const streamsRouter = require("./routes/streams");
 const agentsRouter = require("./routes/agents");
+const motionRouter = require("./routes/motion");
 const { spawn } = require("child_process");
 
 const app = express();
@@ -57,6 +58,7 @@ app.use("/api/cameras", camerasRouter);
 app.use("/api/snapshots", snapshotsRouter);
 app.use("/api/streams", streamsRouter);
 app.use("/api/agents", agentsRouter);
+app.use("/api/motion", motionRouter);
 
 app.use("/streams", express.static(STREAMS_DIR));
 app.use("/snapshots", express.static(SNAPSHOTS_DIR));
